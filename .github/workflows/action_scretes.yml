@@ -1,0 +1,21 @@
+name: Action Secrets workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+    
+    
+jobs:
+  print_secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use a secret
+        env:
+          SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
+        run: |
+          echo "Using the secret"
+          
