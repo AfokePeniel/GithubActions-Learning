@@ -1,1 +1,22 @@
+# This is a basic workflow template for a GitHub Actions workflow.
 
+name: A basic workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run a script
+        run: echo "Hello, world!" > output.txt
+      - name: Push to another repository
+        uses: actions/checkout@v4
