@@ -1,4 +1,4 @@
-# This is a simple workflow example for customized variables defined by a user.
+# This is a simple workflow example for  GitHub predefined variables.
 
 name: A Custom Environment Variables workflow
 
