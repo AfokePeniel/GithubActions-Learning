@@ -1,6 +1,6 @@
 # This is a basic workflow template for a GitHub Actions workflow.
 
-name: A basic workflow
+name: A Environment Variables workflow
 
 on:
   push:
