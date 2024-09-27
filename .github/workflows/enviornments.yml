@@ -1,0 +1,21 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    environment: 
+        name: production
+        url: https://github.com
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to staging
+        run: |
+          echo "Deploying to staging environment"
+          echo "APP_SECRET: ${{ secrets.APP_SECRET }}"
+
+  
