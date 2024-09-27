@@ -25,3 +25,12 @@ jobs:
     runs-on: macos-latest
     steps:
       - run: env
+  print_deafault_github_variables:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+          echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+          echo "GITHUB_REF: $GITHUB_REF"
+          echo "GITHUB_SHA: $GITHUB_SHA"
