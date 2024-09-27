@@ -1,0 +1,25 @@
+name: Artifact Example
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create artifact
+        run: echo "This is my artifact" > artifact.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: artifact.txt
+
+  use-artifact:
+    needs: build  # This ensures this job runs after the 'build' job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: my-artifact
+      - name: Display artifact contents
+        run: cat artifact.txt
