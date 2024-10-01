@@ -1,0 +1,85 @@
+name: Comprehensive Sharing Example
+
+on: [push]  # This workflow runs on every push to the repository
+
+jobs:
+  job1:
+    name: First Job
+    runs-on: ubuntu-latest
+    # Define job outputs that can be used in other jobs
+    outputs:
+      job_output: ${{ steps.set_job_output.outputs.job_output_value }}
+    
+    steps:
+      # Set an environment variable that persists across steps in this job
+      - name: Set an environment variable
+        run: echo "STEP_ENV_VAR=This is from an environment variable" >> $GITHUB_ENV
+      
+      # Use the environment variable set in the previous step
+      - name: Use the environment variable
+        run: |
+         echo "Using env var: $STEP_ENV_VAR"
+      
+      # Set a step output that can be used in subsequent steps
+      - name: Set a step output
+        id: set_step_output  # ID is used to reference this step later
+        run: echo "step_output_value=This is from a step output" >> $GITHUB_OUTPUT
+      
+      # Use the output from the previous step
+      - name: Use the step output
+        run: |
+         echo "Step output: ${{ steps.set_step_output.outputs.step_output_value }}"
+      
+      # Set a job output that can be used in other jobs
+      - name: Set a job output
+        id: set_job_output
+        run: echo "job_output_value=This is from a job output" >> $GITHUB_OUTPUT
+      
+      # Create a file to be used as an artifact
+      - name: Create an artifact
+        run: echo "This is from an artifact" > artifact.txt
+      
+      # Upload the artifact so it can be used in other jobs
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: artifact.txt
+
+  job2:
+    name: Second Job
+    needs: job1
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Use job output from job1
+        run: |
+         echo "Job output from job1: ${{ needs.job1.outputs.job_output }}"
+      
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: my-artifact
+      
+      - name: Display artifact contents
+        run: cat artifact.txt
+      
+      - name: Set an output for next job
+        id: set_output_for_job3
+        run: |
+          echo "message=Hello from job2" >> $GITHUB_OUTPUT
+          echo "timestamp=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+
+  job3:
+    name: Third Job
+    needs: job2
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Use outputs from job2
+        run: |
+          echo "Message from job2: ${{ needs.job2.outputs.message }}"
+          echo "Timestamp from job2: ${{ needs.job2.outputs.timestamp }}"
+      
+      - name: Final step
+        run: echo "Workflow completed successfully!"
