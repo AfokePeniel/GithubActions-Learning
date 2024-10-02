@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   build:
-    runs-on: [self-hosted, Linux, X64, LGHR]
+    runs-on: [self-hosted, Linux, X64, LGHAR]
     steps:
       - name: Checkout repository
         run: echo "Checkout to repository" >> file.txt
