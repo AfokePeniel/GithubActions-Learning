@@ -1,4 +1,4 @@
-name: New file
+name: Self-hosted runner workflow
 
 on: workflow_dispatch
 
