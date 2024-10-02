@@ -1,0 +1,14 @@
+name: New file
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: [self-hosted, Linux, X64, LGHR]
+    steps:
+      - name: Checkout repository
+        run: echo "Checkout repository" >> file.txt
+      - name: Sleep time
+        run: sleep 100
+
+      
