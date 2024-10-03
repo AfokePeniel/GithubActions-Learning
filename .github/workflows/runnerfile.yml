@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Checkout repository
         run: echo "Checkout to repository" >> file.txt
-      
+      - name: Sleep time
+        run: sleep 100
+
 
       
